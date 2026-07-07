@@ -7,7 +7,7 @@ struct SubjectPrompt: Identifiable {
     let image: String
 }
 
-struct ActionPrompt: Identifiable {
+struct VerbPrompt: Identifiable {
     let id: UUID
     let name: String
     let image: String

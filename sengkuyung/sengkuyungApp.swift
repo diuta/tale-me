@@ -12,7 +12,7 @@ import SwiftData
 struct sengkuyungApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            PromptView()
         }
     }
 }
