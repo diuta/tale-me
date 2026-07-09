@@ -14,5 +14,6 @@ struct sengkuyungApp: App {
         WindowGroup {
             LandingView()
         }
+        .modelContainer(for: HistoryData.self)
     }
 }

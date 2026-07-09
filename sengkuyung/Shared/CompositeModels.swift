@@ -1,13 +1,13 @@
 
 import Foundation
 
-struct SubjectPrompt: Identifiable {
+struct SubjectPrompt: Identifiable, Codable {
     let id: UUID
     let name: String
     let image: String
 }
 
-struct VerbPrompt: Identifiable {
+struct VerbPrompt: Identifiable, Codable {
     let id: UUID
     let name: String
     let image: String
