@@ -1,5 +1,19 @@
 import SwiftUI
 
+struct LandingView: View {
+    @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding: Bool = false
+    
+    var body: some View {
+        Group {
+            if hasCompletedOnboarding {
+                PromptView()
+            } else {
+                OnboardingView()
+            }
+        }
+    }
+}
+
 struct PromptView: View {
     @StateObject var viewModel = PromptViewModel()
     
@@ -31,5 +45,5 @@ struct PromptView: View {
 }
 
 #Preview {
-    PromptView()
+    LandingView()
 }
