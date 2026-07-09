@@ -9,10 +9,12 @@ import SwiftUI
       
 struct ActionButtons: View {
     @ObservedObject var viewModel: PromptViewModel
-    
+    @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding: Bool = false
+
     var body: some View {
         HStack (spacing: 20){
             Button {
+                hasCompletedOnboarding = false
             } label: {
                 Image(systemName: "book.pages")
                     .font(.title)
