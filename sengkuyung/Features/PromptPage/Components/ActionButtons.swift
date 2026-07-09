@@ -9,10 +9,12 @@ import SwiftUI
       
 struct ActionButtons: View {
     @ObservedObject var viewModel: PromptViewModel
-    
+    @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding: Bool = false
+
     var body: some View {
         HStack (spacing: 20){
             Button {
+                hasCompletedOnboarding = false
             } label: {
                 Image(systemName: "book.pages")
                     .font(.title)
@@ -25,7 +27,8 @@ struct ActionButtons: View {
             }
             .buttonStyle(.plain)
             
-            Button {
+            NavigationLink {
+                CountdownView()
             } label: {
                 HStack (spacing: 15){
                     Image(systemName: "play.fill")
@@ -35,6 +38,7 @@ struct ActionButtons: View {
                 }
                 .padding(.horizontal, 65)
                 .padding(.vertical, 10)
+//                .foregroundStyle(.primary)?
             }
             .buttonStyle(.glass)
             

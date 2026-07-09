@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-struct HistoryModel {
+struct HistoryModelDummy {
     let id: UUID
     let title: String
     let date: Date

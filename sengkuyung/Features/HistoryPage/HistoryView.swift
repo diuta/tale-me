@@ -18,7 +18,7 @@ struct HistoryView: View {
     }
 
     private enum PageSlot: Identifiable {
-        case journey(HistoryModel)
+        case journey(HistoryModelDummy)
         case placeholder
 
         var id: String {
@@ -31,12 +31,12 @@ struct HistoryView: View {
 
     var onDismiss: () -> Void = {}
 
-    @State private var journeys: [HistoryModel]
+    @State private var journeys: [HistoryModelDummy]
     @State private var phase: Phase = .cover
     @State private var pairIndex: Int = 0
-    @State private var selectedJourney: HistoryModel? = nil
+    @State private var selectedJourney: HistoryModelDummy? = nil
 
-    init(initialJourneys: [HistoryModel] = HistorySampleData.journeys, onDismiss: @escaping () -> Void = {}) {
+    init(initialJourneys: [HistoryModelDummy] = HistorySampleData.journeys, onDismiss: @escaping () -> Void = {}) {
         self._journeys = State(initialValue: initialJourneys)
         self.onDismiss = onDismiss
     }
@@ -191,7 +191,7 @@ struct HistoryView: View {
     }
 
     @ViewBuilder
-    private func detailView(for journey: HistoryModel) -> some View {
+    private func detailView(for journey: HistoryModelDummy) -> some View {
         BookSpreadContainer {
             JourneyDetailContent(
                 title: journey.title,
@@ -227,7 +227,7 @@ struct HistoryView: View {
         }
     }
 
-    private func isMostRecent(_ journey: HistoryModel) -> Bool {
+    private func isMostRecent(_ journey: HistoryModelDummy) -> Bool {
         journey.id == journeys.last?.id
     }
 

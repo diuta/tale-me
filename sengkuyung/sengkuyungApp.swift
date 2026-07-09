@@ -12,7 +12,8 @@ import SwiftData
 struct sengkuyungApp: App {
     var body: some Scene {
         WindowGroup {
-            PromptView()
+            LandingView()
         }
+        .modelContainer(for: HistoryData.self)
     }
 }
