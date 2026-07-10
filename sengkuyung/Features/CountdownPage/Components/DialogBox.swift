@@ -1,13 +1,11 @@
 import SwiftUI
 
 struct DialogBox: View {
-    @ObservedObject var viewModel = PromptViewModel()
+    @EnvironmentObject var viewModel : PromptViewModel
     
     var body: some View {
         ZStack (alignment: .bottom){
-//            Color.black
-//                .ignoresSafeArea()
-            
+
             Image("tale_membaca")
                 .resizable()
                 .scaledToFit()
@@ -16,7 +14,7 @@ struct DialogBox: View {
                 .shadow(color: .black.opacity(0.25), radius: 16, x: 0, y: 8)
             
             VStack(spacing: 16) {
-                Text("There was a/an \(viewModel.selectedSubject.name) \(viewModel.selectedAction.name)")
+                Text("There was ^[a \(viewModel.selectedVerb.name)](inflect: true) \(viewModel.selectedSubject.name) ")
                     .fontWeight(.bold)
                     .font(.system(size: 32))
                     .foregroundStyle(.lightText)
@@ -27,7 +25,6 @@ struct DialogBox: View {
                     .foregroundStyle(.lightText)
                 
                 Button {
-                    // CHANGE THIS to navigate to RecordingPage
                     print("Button Tapped")
                 } label: {
                     Text("Tap to continue")
