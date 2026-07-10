@@ -16,7 +16,8 @@ struct LandingView: View {
 
 struct PromptView: View {
     @StateObject var viewModel = PromptViewModel()
-    
+    @State private var showHistory = false
+
     var body: some View {
         NavigationStack{
             ZStack {
@@ -24,26 +25,29 @@ struct PromptView: View {
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
-                
+
                 VStack(spacing: 80) {
                     Text("Tap the cards to choose a subject and verb, then press Start.")
                         .font(Font.largeTitle.bold())
-                    
+
                     HStack(spacing: 64) {
                         PromptCard(cardTitle: "Verb", promptImage: viewModel.selectedVerb.image, promptName: viewModel.selectedVerb.name) {
                             viewModel.shuffleVerb()
                         }
-                        
+
                         PromptCard(cardTitle: "Subject", promptImage: viewModel.selectedSubject.image, promptName: viewModel.selectedSubject.name) {
                             viewModel.shuffleSubject()
                         }
                     }
-                    
-                    ActionButtons(viewModel: viewModel)
+
+                    ActionButtons(viewModel: viewModel, onOpenHistory: { showHistory = true })
                 }
             }
         }
         .environmentObject(viewModel)
+        .fullScreenCover(isPresented: $showHistory) {
+            HistoryView(onDismiss: { showHistory = false })
+        }
     }
 }
 

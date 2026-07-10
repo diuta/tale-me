@@ -7,48 +7,18 @@
 
 
 import SwiftUI
+import SwiftData
 
 struct HistoryView: View {
 
-    private enum Phase {
-        case cover
-        case tableOfContents
-        case spread
-        case detail
-    }
-
-    private enum PageSlot: Identifiable {
-        case journey(HistoryData)
-        case placeholder
-
-        var id: String {
-            switch self {
-            case .journey(let model): return model.historyID.uuidString
-            case .placeholder: return "placeholder"
-            }
-        }
-    }
-
     var onDismiss: () -> Void = {}
 
-    @State private var journeys: [HistoryData]
-    @State private var phase: Phase = .cover
-    @State private var pairIndex: Int = 0
-    @State private var selectedJourney: HistoryData? = nil
-    @State private var notesByJourney: [UUID: String] = [:]
-    @State private var isEditingNotes = false
+    @Environment(\.modelContext) private var modelContext
+    @StateObject private var viewModel: HistoryViewModel
 
-    init(initialJourneys: [HistoryData] = HistorySampleData.journeys, onDismiss: @escaping () -> Void = {}) {
-        self._journeys = State(initialValue: initialJourneys)
+    init(initialJourneys: [HistoryData] = [], onDismiss: @escaping () -> Void = {}) {
+        self._viewModel = StateObject(wrappedValue: HistoryViewModel(initialJourneys: initialJourneys))
         self.onDismiss = onDismiss
-    }
-
-    private var slots: [PageSlot] {
-        journeys.map(PageSlot.journey) + [.placeholder]
-    }
-
-    private var pairs: [[PageSlot]] {
-        stride(from: 0, to: slots.count, by: 2).map { Array(slots[$0..<min($0 + 2, slots.count)]) }
     }
 
     var body: some View {
@@ -62,15 +32,21 @@ struct HistoryView: View {
             Spacer(minLength: 0)
         }
         .background(Color.white.ignoresSafeArea())
-        .onAppear(perform: scheduleSplashTransition)
-        .sheet(isPresented: $isEditingNotes) {
-            if let journey = selectedJourney {
+        .onAppear {
+            viewModel.loadJourneys(context: modelContext)
+            
+            //dummy
+            // viewModel.journeys = HistorySampleData.journeys
+
+            viewModel.scheduleSplashTransition()
+        }
+        .sheet(isPresented: $viewModel.isEditingNotes) {
+            if let journey = viewModel.selectedJourney {
                 NotesEditorSheet(
-                    initialText: notesByJourney[journey.historyID] ?? "",
-                    onCancel: { isEditingNotes = false },
+                    initialText: viewModel.note(for: journey),
+                    onCancel: { viewModel.cancelEditingNotes() },
                     onConfirm: { newText in
-                        notesByJourney[journey.historyID] = newText
-                        isEditingNotes = false
+                        viewModel.confirmNotes(newText, for: journey)
                     }
                 )
                 .presentationDetents([.medium, .large])
@@ -81,11 +57,11 @@ struct HistoryView: View {
 
     @ViewBuilder
     private var topBar: some View {
-        switch phase {
+        switch viewModel.phase {
         case .cover:
             HistoryTopBar(leadingStyle: .home, showsTrailingMenu: false, onLeading: onDismiss)
         case .detail:
-            HistoryTopBar(leadingStyle: .back, onLeading: { phase = .spread })
+            HistoryTopBar(leadingStyle: .back, onLeading: { viewModel.backToSpreadFromDetail() })
         case .tableOfContents, .spread:
             HistoryTopBar(leadingStyle: .home, onLeading: onDismiss)
         }
@@ -93,30 +69,27 @@ struct HistoryView: View {
 
     @ViewBuilder
     private var content: some View {
-        switch phase {
+        switch viewModel.phase {
         case .cover:
             BookCover()
         case .tableOfContents:
             BookSpreadContainer(
                 showsNextChevron: true,
-                onNext: { withAnimation { phase = .spread } }
+                onNext: { viewModel.advanceFromTableOfContents() }
             ) {
                 JourneyBookIcon()
             } right: {
                 TableOfContentsList(
-                    rows: journeys.enumerated().map { index, journey in
+                    rows: viewModel.journeys.enumerated().map { index, journey in
                         TableOfContentsRow(
                             id: journey.historyID,
-                            title: title(for: journey),
+                            title: viewModel.title(for: journey),
                             date: journey.historyDate,
-                            isBookmarked: index == journeys.count - 1
+                            isBookmarked: index == viewModel.journeys.count - 1
                         )
                     },
                     onSelectRow: { row in
-                        if let index = journeys.firstIndex(where: { $0.historyID == row.id }) {
-                            pairIndex = index / 2
-                        }
-                        withAnimation { phase = .spread }
+                        viewModel.selectRow(id: row.id)
                     }
                 )
             }
@@ -125,7 +98,7 @@ struct HistoryView: View {
             spreadView
 
         case .detail:
-            if let journey = selectedJourney {
+            if let journey = viewModel.selectedJourney {
                 detailView(for: journey)
             }
         }
@@ -133,34 +106,24 @@ struct HistoryView: View {
 
     @ViewBuilder
     private var spreadView: some View {
-        if journeys.isEmpty {
+        if viewModel.journeys.isEmpty {
             BookSpreadContainer {
                 EmptyJourneyIllustration()
             } right: {
-                PlaceholderJourneyCard(isMostRecent: true)
+                PlaceholderJourneyCard(isMostRecent: true, onStartNewJourney: { onDismiss() })
             }
         } else {
-            let pair = pairs[min(pairIndex, pairs.count - 1)]
+            let pair = viewModel.currentPair
             let leftSlot = pair.first
             let rightSlot = pair.count > 1 ? pair[1] : nil
 
             BookSpreadContainer(
-                leftPageNumber: leftSlot.flatMap(pageNumber),
-                rightPageNumber: rightSlot.flatMap(pageNumber),
+                leftPageNumber: leftSlot.flatMap(viewModel.pageNumber),
+                rightPageNumber: rightSlot.flatMap(viewModel.pageNumber),
                 showsPreviousChevron: true,
-                showsNextChevron: pairIndex < pairs.count - 1,
-                onPrevious: {
-                    withAnimation {
-                        if pairIndex == 0 {
-                            phase = .tableOfContents
-                        } else {
-                            pairIndex -= 1
-                        }
-                    }
-                },
-                onNext: {
-                    withAnimation { pairIndex = min(pairIndex + 1, pairs.count - 1) }
-                }
+                showsNextChevron: viewModel.canGoToNextPair,
+                onPrevious: { viewModel.goToPreviousPair() },
+                onNext: { viewModel.goToNextPair() }
             ) {
                 slotView(leftSlot, ribbonEdge: .trailing)
             } right: {
@@ -174,19 +137,18 @@ struct HistoryView: View {
     }
 
     @ViewBuilder
-    private func slotView(_ slot: PageSlot?, ribbonEdge: HorizontalEdge) -> some View {
+    private func slotView(_ slot: HistoryViewModel.PageSlot?, ribbonEdge: HorizontalEdge) -> some View {
         switch slot {
         case .journey(let journey):
             JourneyCard(
-                title: title(for: journey),
+                title: viewModel.title(for: journey),
                 date: journey.historyDate,
                 iconName1: journey.subjectPrompt.image,
                 iconName2: journey.verbPrompt.image,
-                isMostRecent: isMostRecent(journey),
+                isMostRecent: viewModel.isMostRecent(journey),
                 ribbonEdge: ribbonEdge,
                 onViewDetails: {
-                    selectedJourney = journey
-                    withAnimation { phase = .detail }
+                    viewModel.viewDetails(for: journey)
                 }
             )
         case .placeholder:
@@ -194,7 +156,7 @@ struct HistoryView: View {
                 isMostRecent: true,
                 ribbonEdge: ribbonEdge,
                 onStartNewJourney: {
-                    // TODO: kick off a new journey/session.
+                    onDismiss()
                 }
             )
         case .none:
@@ -206,55 +168,38 @@ struct HistoryView: View {
     private func detailView(for journey: HistoryData) -> some View {
         BookSpreadContainer {
             JourneyDetailContent(
-                title: title(for: journey),
+                title: viewModel.title(for: journey),
                 date: journey.historyDate,
                 duration: "1h 3s",
                 iconName1: journey.subjectPrompt.image,
                 iconName2: journey.verbPrompt.image,
-                isMostRecent: isMostRecent(journey)
+                isMostRecent: viewModel.isMostRecent(journey)
             )
         } right: {
             JourneyMediaContent(
                 imageName: journey.thumbnailName,
                 isVideo: journey.videoName != nil,
-                note: notesByJourney[journey.historyID] ?? "",
+                note: viewModel.note(for: journey),
                 onPlay: {
                     // TODO: play back the captured video.
                 },
                 onAddOrEditNotes: {
-                    isEditingNotes = true
+                    viewModel.startEditingNotes()
                 }
             )
-        }
-    }
-
-    private func pageNumber(for slot: PageSlot) -> Int? {
-        switch slot {
-        case .journey(let journey):
-            return journeys.firstIndex(where: { $0.historyID == journey.historyID }).map { $0 + 1 }
-        case .placeholder:
-            return nil
-        }
-    }
-
-    private func isMostRecent(_ journey: HistoryData) -> Bool {
-        journey.historyID == journeys.last?.historyID
-    }
-
-    private func title(for journey: HistoryData) -> String {
-        "\(journey.verbPrompt.name) \(journey.subjectPrompt.name)"
-    }
-
-    private func scheduleSplashTransition() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.6) {
-            withAnimation { phase = .tableOfContents }
         }
     }
 }
 
 #Preview(traits: .landscapeLeft) {
     HistoryView()
+        .modelContainer(for: HistoryData.self, inMemory: true)
 }
+
+//dummy
+//#Preview(traits: .landscapeLeft) {
+//    HistoryView(initialJourneys: HistorySampleData.journeys)
+//}
 
 //#Preview("Empty state", traits: .landscapeLeft) {
 //    HistoryView(initialJourneys: [])

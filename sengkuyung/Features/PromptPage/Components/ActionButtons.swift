@@ -9,12 +9,12 @@ import SwiftUI
       
 struct ActionButtons: View {
     @ObservedObject var viewModel: PromptViewModel
-    @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding: Bool = false
+    var onOpenHistory: () -> Void = {}
 
     var body: some View {
         HStack (spacing: 20){
             Button {
-                hasCompletedOnboarding = false
+                onOpenHistory()
             } label: {
                 Image(systemName: "book.pages")
                     .font(.title)
@@ -60,5 +60,5 @@ struct ActionButtons: View {
 }
 
 #Preview {
-    ActionButtons(viewModel: PromptViewModel())
+    ActionButtons(viewModel: PromptViewModel(), onOpenHistory: {})
 }

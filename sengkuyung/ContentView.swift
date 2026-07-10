@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        OnboardingView()
+       PromptView()
     }
 }
 
-#Preview {
+#Preview(traits: .landscapeLeft) {
     ContentView()
 }
