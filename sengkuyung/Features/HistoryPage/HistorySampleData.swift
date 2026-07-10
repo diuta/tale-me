@@ -8,15 +8,50 @@ import Foundation
 
 enum HistorySampleData {
 
-    static let journeys: [HistoryModel] = [
-        .init(id: UUID(), title: "Fishing Elephant", date: .init(timeIntervalSinceNow: -86_400 * 6), subject: "🎧", verb: "🐘", image: "sample_journey", audio: "", note: "Today, Abdul learned that elephants are big and very creative. He also learned that elephants are gentle."),
-        .init(id: UUID(), title: "Painting Elephant", date: .init(timeIntervalSinceNow: -86_400 * 5), subject: "🎨", verb: "🐘", image: "sample_journey", audio: "", note: ""),
-        .init(id: UUID(), title: "Showering Tiger", date: .init(timeIntervalSinceNow: -86_400 * 4), subject: "🚿", verb: "🐅", image: "sample_journey", audio: "", note: ""),
-        .init(id: UUID(), title: "Running Athlete", date: .init(timeIntervalSinceNow: -86_400 * 3), subject: "🏃", verb: "🏅", image: "sample_journey", audio: "", note: ""),
-        .init(id: UUID(), title: "Eating Uncle", date: .init(timeIntervalSinceNow: -86_400 * 2), subject: "🍽️", verb: "👨", image: "sample_journey", audio: "", note: ""),
-        .init(id: UUID(), title: "Studying Astronaut", date: .init(timeIntervalSinceNow: -86_400), subject: "📚", verb: "🧑‍🚀", image: "sample_journey", audio: "", note: ""),
-        .init(id: UUID(), title: "Sleeping Superhero", date: .init(), subject: "😴", verb: "🦸", image: "sample_journey", audio: "", note: ""),
+    static let journeys: [HistoryData] = [
+        .init(
+            subject: SubjectPrompt(id: UUID(), name: "Elephant", image: "🐘"),
+            verb: VerbPrompt(id: UUID(), name: "Fishing", image: "🎣", imageBackground: ""),
+            date: .init(timeIntervalSinceNow: -86_400 * 6),
+            thumbnailName: "sample_journey"
+        ),
+        .init(
+            subject: SubjectPrompt(id: UUID(), name: "Elephant", image: "🐘"),
+            verb: VerbPrompt(id: UUID(), name: "Painting", image: "🎨", imageBackground: ""),
+            date: .init(timeIntervalSinceNow: -86_400 * 5),
+            thumbnailName: "sample_journey"
+        ),
+        .init(
+            subject: SubjectPrompt(id: UUID(), name: "Tiger", image: "🐅"),
+            verb: VerbPrompt(id: UUID(), name: "Showering", image: "🚿", imageBackground: ""),
+            date: .init(timeIntervalSinceNow: -86_400 * 4),
+            thumbnailName: "sample_journey"
+        ),
+        .init(
+            subject: SubjectPrompt(id: UUID(), name: "Athlete", image: "🏅"),
+            verb: VerbPrompt(id: UUID(), name: "Running", image: "🏃", imageBackground: ""),
+            date: .init(timeIntervalSinceNow: -86_400 * 3),
+            thumbnailName: "sample_journey"
+        ),
+        .init(
+            subject: SubjectPrompt(id: UUID(), name: "Uncle", image: "👨"),
+            verb: VerbPrompt(id: UUID(), name: "Eating", image: "🍽️", imageBackground: ""),
+            date: .init(timeIntervalSinceNow: -86_400 * 2),
+            thumbnailName: "sample_journey"
+        ),
+        .init(
+            subject: SubjectPrompt(id: UUID(), name: "Astronaut", image: "🧑‍🚀"),
+            verb: VerbPrompt(id: UUID(), name: "Studying", image: "📚", imageBackground: ""),
+            date: .init(timeIntervalSinceNow: -86_400),
+            thumbnailName: "sample_journey"
+        ),
+        .init(
+            subject: SubjectPrompt(id: UUID(), name: "Superhero", image: "🦸"),
+            verb: VerbPrompt(id: UUID(), name: "Sleeping", image: "😴", imageBackground: ""),
+            date: .init(),
+            thumbnailName: "sample_journey"
+        ),
     ]
 
-    static let empty: [HistoryModel] = []
+    static let empty: [HistoryData] = []
 }

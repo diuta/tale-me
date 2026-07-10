@@ -15,6 +15,7 @@ struct JourneyDetailContent: View {
     let iconName1: String
     let iconName2: String
     var isMostRecent: Bool = false
+    var ribbonEdge: HorizontalEdge = .trailing
 
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -28,39 +29,35 @@ struct JourneyDetailContent: View {
     private let baseHeight: CGFloat = 600
 
     var body: some View {
-        GeometryReader { geo in
-            let scale = min(geo.size.width / baseWidth, geo.size.height / baseHeight)
+            GeometryReader { geo in
+                let scale = min(geo.size.width / baseWidth, geo.size.height / baseHeight)
 
-            ZStack(alignment: .topTrailing) {
-                VStack(alignment: .leading, spacing: 12 * scale) {
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(title)
-                            .font(.system(size: 18, weight: .bold))
-                            .foregroundColor(accent)
-
-                        HStack(spacing: 10) {
-                            Label(Self.dateFormatter.string(from: date), systemImage: "calendar")
-                            Label(duration, systemImage: "clock")
+                ZStack(alignment: ribbonEdge == .trailing ? .topTrailing : .topLeading) {
+                    VStack(spacing: 40 * scale) {
+                        VStack(spacing: 2) {
+                            Text(title)
+                                .font(.system(size: 41 * scale, weight: .bold))
+                                .foregroundColor(Color(red: 0.0, green: 129.0 / 255.0, blue: 167.0 / 255.0))
+                            Text(Self.dateFormatter.string(from: date))
+                                .font(.system(size: 12 * scale))
+                                .foregroundColor(.secondary)
                         }
-                        .font(.system(size: 11))
-                        .foregroundColor(.secondary)
+
+                        CardPair(iconName1: iconName1, iconName2: iconName2)
+                            .scaleEffect(scale)
+                            .frame(height: 250 * scale)
                     }
+                    .frame(width: geo.size.width, height: geo.size.height)
 
-                    CardPair(iconName1: iconName1, iconName2: iconName2)
-                        .scaleEffect(scale)
-                        .frame(height: 250 * scale)
-                }
-                .frame(width: geo.size.width, alignment: .topLeading)
-
-                if isMostRecent {
-                    BookRibbon()
-                        .scaleEffect(scale)
-                        .offset(x: -8 * scale, y: -6 * scale)
+                    if isMostRecent {
+                        BookRibbon()
+                            .scaleEffect(scale)
+                            .offset(x: ribbonEdge == .trailing ? -8 * scale : 8 * scale, y: -6 * scale)
+                    }
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
 }
 
 #Preview(traits: .landscapeLeft) {

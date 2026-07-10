@@ -9,8 +9,6 @@ import SwiftUI
 
 struct CardPair: View {
 
-    /// A single slot's content — either an emoji/text glyph, or an SF Symbol
-    /// that can be tinted to any color.
     enum Icon {
         case emoji(String)
         case symbol(String, color: Color = Color(red: 0.0, green: 129.0/255.0, blue: 167.0/255.0))

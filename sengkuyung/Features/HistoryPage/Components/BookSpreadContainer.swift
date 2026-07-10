@@ -5,10 +5,6 @@
 
 import SwiftUI
 
-/// The reusable "open book" shell used across every History screen —
-/// Table of Contents, journey card spreads, and the empty/no-session page.
-/// It just lays out whatever `left` and `right` content you give it inside
-/// the brown frame with a spine divider; it doesn't know about Journeys.
 struct BookSpreadContainer<Left: View, Right: View>: View {
 
     var leftPageNumber: Int? = nil
@@ -45,25 +41,33 @@ struct BookSpreadContainer<Left: View, Right: View>: View {
         self.right = right()
     }
 
-    /// The size the book's internal layout (page rectangle, spine, page
-    /// number row) was hand-tuned at. We build the book at this fixed
-    /// "design" size, then scale the whole thing up or down with
-    /// `GeometryReader` so it actually fills whatever space the parent
-    /// gives it instead of staying pinned at 970×640 on every screen.
-    private let designWidth: CGFloat = 480 * 2 + 10
-    private let designHeight: CGFloat = 640
+    // Must match the book's actual content: two 480pt pages + the 24pt spine,
+    // plus the 18pt padding applied on every edge inside `book`. The previous
+    // constants (970x640) were smaller than that real content size, so the
+    // page background/frame never matched what was actually being laid out —
+    // `book` silently rendered larger than designWidth/designHeight, which
+    // threw off the scale-to-fit math in `body` and could blow the page up
+    // far past the visible area.
+    private let designWidth: CGFloat = 480 * 2 + 24 + 18 * 2
+    private let designHeight: CGFloat = 620 + 18 * 2
 
     var body: some View {
         HStack(spacing: 8) {
             chevronButton(systemName: "chevron.left", isVisible: showsPreviousChevron, action: onPrevious)
 
             GeometryReader { outerGeo in
-                let scale = min(outerGeo.size.width / designWidth, outerGeo.size.height / designHeight)
+                let rawScale = min(outerGeo.size.width / designWidth, outerGeo.size.height / designHeight)
+                // Never let the book scale up past its design size — on a window/device
+                // larger than the 970x640 design canvas this would blow the content up
+                // far beyond the visible frame, leaving only a cropped, blank-looking
+                // sliver on screen.
+                let scale = rawScale.isFinite ? min(rawScale, 1) : 1
 
                 book
                     .frame(width: designWidth, height: designHeight)
                     .scaleEffect(scale)
                     .frame(width: outerGeo.size.width, height: outerGeo.size.height)
+                    .clipped()
             }
             .aspectRatio(designWidth / designHeight, contentMode: .fit)
 
@@ -127,7 +131,7 @@ struct BookSpreadContainer<Left: View, Right: View>: View {
             }
         }
         .padding(.bottom, 32)
-        .frame(width: 480*2)
+        .frame(width: designWidth)
     }
 
     @ViewBuilder

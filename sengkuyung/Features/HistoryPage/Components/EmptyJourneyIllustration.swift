@@ -11,27 +11,23 @@ struct EmptyJourneyIllustration: View {
     
     
     var body: some View {
-        VStack(spacing: 16) {
-            ZStack(alignment: .topTrailing) {
-                Image("tale_berfikir")
-                    .font(.system(size: 90))
-                    .foregroundColor(Color(red: 0.42, green: 0.24, blue: 0.12)
-                    )
-            }
-            .frame(height: 110)
-            
+        VStack(spacing: 24) {
+            Image("tale_berfikir")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 483, height: 444)
+
             Text("Your journey hasn't started yet")
-                .padding(.top, 160)
                 .font(.system(size: 24, weight: .bold))
-                .foregroundColor(Color(red: 0.0/255.0, green: 129.0/255.0, blue: 167.0/255.0)
-                )
-                
-            
+                .multilineTextAlignment(.center)
+                .foregroundColor(Color(red: 0.0/255.0, green: 129.0/255.0, blue: 167.0/255.0))
+                .frame(width: 285, height: 92)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
 #Preview(traits: .landscapeLeft) {
     EmptyJourneyIllustration()
-        .padding()
+    
 }
