@@ -24,19 +24,19 @@ let onboardingPages = [
     ),
     OnboardingModel(
         image: "onboarding23_caritau",
-        title: "You don't have to make up a story tonight.",
+        title: "Tonight, the story’s on us",
         subtitle: "We hand you the spark, a theme, a character, a 'what if.' You just start talking.",
         buttonTittle: nil
     ),
     OnboardingModel(
         image: "onboarding23_caritau",
-        title: "While you're telling it, we're keeping it.",
+        title: "Keeping what matters most",
         subtitle: "Their laugh, their questions, the way they lean in. Recorded without you lifting a finger.",
         buttonTittle: nil
     ),
     OnboardingModel(
         image: "onboarding4_happy",
-        title: "A Memory, Not Just a File",
+        title: "A memory, not just a file",
         subtitle: "Every story becomes something you can hold onto.",
         buttonTittle: "Get Started"
     )

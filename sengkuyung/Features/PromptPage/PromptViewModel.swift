@@ -4,11 +4,11 @@ import Combine
 
 class PromptViewModel: ObservableObject {
     @Published var selectedSubject: SubjectPrompt
-    @Published var selectedAction: VerbPrompt
+    @Published var selectedVerb: VerbPrompt
 
     init() {
         self.selectedSubject = SubjectPrompt.sampleSubjects.randomElement() ?? SubjectPrompt(id: UUID(), name: "Default Subject", image: "Panda")
-        self.selectedAction = VerbPrompt.sampleActions.randomElement() ?? VerbPrompt(id: UUID(), name: "Default Action", image: "action_eating", imageBackground: "bg_eating")
+        self.selectedVerb = VerbPrompt.sampleVerb.randomElement() ?? VerbPrompt(id: UUID(), name: "Default Action", image: "action_eating", imageBackground: "bg_eating")
     }
 
     func shuffleSubject() {
@@ -18,15 +18,15 @@ class PromptViewModel: ObservableObject {
         }
     }
 
-    func shuffleAction() {
-        let availableAction = VerbPrompt.sampleActions.filter {$0.id != selectedAction.id}
+    func shuffleVerb() {
+        let availableAction = VerbPrompt.sampleVerb.filter {$0.id != selectedVerb.id}
         if let newAction = availableAction.randomElement() {
-            self.selectedAction = newAction
+            self.selectedVerb = newAction
         }
     }
     
     func shuffleBoth() {
         shuffleSubject()
-        shuffleAction()
+        shuffleVerb()
     }
 }
