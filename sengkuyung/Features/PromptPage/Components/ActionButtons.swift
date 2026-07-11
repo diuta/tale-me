@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
-      
+
 struct ActionButtons: View {
     @ObservedObject var viewModel: PromptViewModel
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding: Bool = false
-
+    
     var body: some View {
         HStack (spacing: 20){
-            Button {
-                hasCompletedOnboarding = false
+            NavigationLink {
+                ContentView()
             } label: {
                 Image(systemName: "book.pages")
                     .font(.title)
@@ -38,7 +38,7 @@ struct ActionButtons: View {
                 }
                 .padding(.horizontal, 65)
                 .padding(.vertical, 10)
-//                .foregroundStyle(.primary)?
+                //                .foregroundStyle(.primary)?
             }
             .buttonStyle(.glass)
             

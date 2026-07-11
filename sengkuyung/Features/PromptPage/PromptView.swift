@@ -16,9 +16,10 @@ struct LandingView: View {
 
 struct PromptView: View {
     @StateObject var viewModel = PromptViewModel()
+    @State private var path = NavigationPath()
     
     var body: some View {
-        NavigationStack{
+        NavigationStack(path: $path) {
             ZStack {
                 Image(viewModel.selectedVerb.imageBackground)
                     .resizable()
