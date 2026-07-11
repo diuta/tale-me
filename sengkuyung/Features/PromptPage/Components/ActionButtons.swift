@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-      
+
 struct ActionButtons: View {
     @ObservedObject var viewModel: PromptViewModel
     var onOpenHistory: () -> Void = {}
@@ -38,7 +38,7 @@ struct ActionButtons: View {
                 }
                 .padding(.horizontal, 65)
                 .padding(.vertical, 10)
-//                .foregroundStyle(.primary)?
+                //                .foregroundStyle(.primary)?
             }
             .buttonStyle(.glass)
             

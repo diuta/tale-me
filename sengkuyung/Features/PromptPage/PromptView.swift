@@ -19,7 +19,7 @@ struct PromptView: View {
     @State private var showHistory = false
 
     var body: some View {
-        NavigationStack{
+        NavigationStack() {
             ZStack {
                 Image(viewModel.selectedVerb.imageBackground)
                     .resizable()

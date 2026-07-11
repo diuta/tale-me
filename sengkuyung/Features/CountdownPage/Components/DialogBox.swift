@@ -24,8 +24,8 @@ struct DialogBox: View {
                     .font(.system(size: 32))
                     .foregroundStyle(.lightText)
                 
-                Button {
-                    print("Button Tapped")
+                NavigationLink {
+                    RecordingView()
                 } label: {
                     Text("Tap to continue")
                         .font(.system(size: 24))
