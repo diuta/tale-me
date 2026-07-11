@@ -8,15 +8,15 @@ class HistoryData {
     var subjectPrompt: SubjectPrompt
     var verbPrompt: VerbPrompt
     var historyDate: Date
-    var videoName: String?
-    var thumbnailName: String?
+    var videoURL: URL
+    var thumbnailURL: URL
     
-    init(historyID: UUID = UUID(), subject: SubjectPrompt, verb: VerbPrompt, date: Date = Date(), videoName: String? = nil, thumbnailName: String? = nil) {
+    init(historyID: UUID = UUID(), subject: SubjectPrompt, verb: VerbPrompt, date: Date = Date(), videoURL: URL, thumbnailURL: URL) {
         self.historyID = historyID
         self.subjectPrompt = subject
         self.verbPrompt = verb
         self.historyDate = date
-        self.videoName = videoName
-        self.thumbnailName = thumbnailName
+        self.videoURL = videoURL
+        self.thumbnailURL = thumbnailURL
     }
 }

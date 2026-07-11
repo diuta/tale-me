@@ -6,6 +6,7 @@ struct RecordingView: View {
     @State private var centeredPropID: UUID?
     @State private var promptIndex: Int = 0
     @State private var isPaused = false
+    @State private var isFinishRecording = false
     @State private var isNavigateHome = false
     @EnvironmentObject var promptViewModel : PromptViewModel
     @Environment(\.dismiss) private var dismiss
@@ -80,7 +81,6 @@ struct RecordingView: View {
                     },
                     onFinish: {
                         cameraService.saveRecording(subject: promptViewModel.selectedSubject, verb: promptViewModel.selectedVerb, modelContext: context)
-                        print("well played")
                     }
                 )
                 
@@ -113,6 +113,11 @@ struct RecordingView: View {
             
         }
         .navigationBarBackButtonHidden()
+        .navigationDestination(isPresented: $cameraService.isSaveComplete) {
+            HistoryView(onDismiss: {
+                    cameraService.isSaveComplete = false
+                })
+        }
         .navigationDestination(isPresented: $isNavigateHome) {
             PromptView()
         }

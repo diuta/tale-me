@@ -8,27 +8,29 @@
 
 import SwiftUI
 import SwiftData
+import AVKit
 
 struct HistoryView: View {
-
+    
     var onDismiss: () -> Void = {}
-
+    
     @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel: HistoryViewModel
-
+    @State private var isPlayingVideo = false
+    
     init(initialJourneys: [HistoryData] = [], onDismiss: @escaping () -> Void = {}) {
         self._viewModel = StateObject(wrappedValue: HistoryViewModel(initialJourneys: initialJourneys))
         self.onDismiss = onDismiss
     }
-
+    
     var body: some View {
         VStack(spacing: 24) {
             topBar
-
+            
             Spacer(minLength: 0)
-
+            
             content
-
+            
             Spacer(minLength: 0)
         }
         .background(Color.white.ignoresSafeArea())
@@ -37,7 +39,7 @@ struct HistoryView: View {
             
             //dummy
             // viewModel.journeys = HistorySampleData.journeys
-
+            
             viewModel.scheduleSplashTransition()
         }
         .sheet(isPresented: $viewModel.isEditingNotes) {
@@ -53,8 +55,15 @@ struct HistoryView: View {
                 .presentationDragIndicator(.visible)
             }
         }
+        .navigationBarBackButtonHidden()
+        .fullScreenCover(isPresented: $isPlayingVideo) {
+            if let journey = viewModel.selectedJourney {
+                VideoPlayer(player: AVPlayer(url: journey.videoURL))
+                    .ignoresSafeArea()
+            }
+        }
     }
-
+    
     @ViewBuilder
     private var topBar: some View {
         switch viewModel.phase {
@@ -66,7 +75,7 @@ struct HistoryView: View {
             HistoryTopBar(leadingStyle: .home, onLeading: onDismiss)
         }
     }
-
+    
     @ViewBuilder
     private var content: some View {
         switch viewModel.phase {
@@ -93,17 +102,17 @@ struct HistoryView: View {
                     }
                 )
             }
-
+            
         case .spread:
             spreadView
-
+            
         case .detail:
             if let journey = viewModel.selectedJourney {
                 detailView(for: journey)
             }
         }
     }
-
+    
     @ViewBuilder
     private var spreadView: some View {
         if viewModel.journeys.isEmpty {
@@ -116,7 +125,7 @@ struct HistoryView: View {
             let pair = viewModel.currentPair
             let leftSlot = pair.first
             let rightSlot = pair.count > 1 ? pair[1] : nil
-
+            
             BookSpreadContainer(
                 leftPageNumber: leftSlot.flatMap(viewModel.pageNumber),
                 rightPageNumber: rightSlot.flatMap(viewModel.pageNumber),
@@ -135,7 +144,7 @@ struct HistoryView: View {
             }
         }
     }
-
+    
     @ViewBuilder
     private func slotView(_ slot: HistoryViewModel.PageSlot?, ribbonEdge: HorizontalEdge) -> some View {
         switch slot {
@@ -163,7 +172,7 @@ struct HistoryView: View {
             Color.clear
         }
     }
-
+    
     @ViewBuilder
     private func detailView(for journey: HistoryData) -> some View {
         BookSpreadContainer {
@@ -177,11 +186,11 @@ struct HistoryView: View {
             )
         } right: {
             JourneyMediaContent(
-                imageName: journey.thumbnailName,
-                isVideo: journey.videoName != nil,
+                thumbnailURL: journey.thumbnailURL,
+                isVideo: true,
                 note: viewModel.note(for: journey),
                 onPlay: {
-                    // TODO: play back the captured video.
+                    isPlayingVideo = true
                 },
                 onAddOrEditNotes: {
                     viewModel.startEditingNotes()

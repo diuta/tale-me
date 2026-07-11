@@ -21,9 +21,10 @@ class CameraService: NSObject, ObservableObject {
     @Published var isCameraOff = false
     @Published var isMuted = false
     @Published var formattedElapsedTime = "00:00"
+    @Published var isSaveComplete = false
+    
     private var timer: Timer?
     private var recordingDuration = 0
-    
     private var selectedSubject: SubjectPrompt?
     private var selectedVerb: VerbPrompt?
     private var modelContext: ModelContext?
@@ -94,6 +95,7 @@ class CameraService: NSObject, ObservableObject {
         
         recordingDuration = 0
         formattedElapsedTime = "00:00"
+        self.isSaveComplete = false
         startTimer()
         
         if let videoConnection = movieOutput.connection(with: .video) {
@@ -106,7 +108,8 @@ class CameraService: NSObject, ObservableObject {
     }
     
     func stopRecording() {
-        if movieOutput.isRecording || movieOutput.isRecordingPaused {            movieOutput.stopRecording()
+        if movieOutput.isRecording || movieOutput.isRecordingPaused {
+            movieOutput.stopRecording()
         }
         timer?.invalidate()
         timer = nil
@@ -229,6 +232,7 @@ extension CameraService: AVCaptureFileOutputRecordingDelegate {
         DispatchQueue.main.async {
             do {
                 try self.storageService.saveHistory(from: videoURL, subject: subject, verb: verb, context: context)
+                self.isSaveComplete = true
             } catch {
                 print("err: \(error)")
             }

@@ -44,6 +44,7 @@ struct PromptView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden()
         .environmentObject(viewModel)
         .fullScreenCover(isPresented: $showHistory) {
             HistoryView(onDismiss: { showHistory = false })

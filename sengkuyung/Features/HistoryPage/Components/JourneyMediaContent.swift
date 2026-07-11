@@ -9,7 +9,7 @@ import SwiftUI
 
 struct JourneyMediaContent: View {
 
-    var imageName: String? = nil
+    var thumbnailURL: URL? = nil
     var isVideo: Bool = false
     var note: String = ""
     var onPlay: () -> Void = {}
@@ -23,10 +23,10 @@ struct JourneyMediaContent: View {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color(.systemGray5))
                     .overlay {
-                        if let imageName {
-                            Image(imageName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
+                        if let thumbnailURL {
+                            AsyncImage(url: thumbnailURL)
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fill)
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                         } else {
                             Image(systemName: "photo")
