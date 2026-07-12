@@ -80,30 +80,30 @@ struct HistoryView: View {
             player?.pause()
             player = nil
 
-            DispatchQueue.main.async {
-                UIApplication.shared.connectedScenes
-                    .compactMap { $0 as? UIWindowScene }
-                    .flatMap { $0.windows }
-                    .forEach { $0.isUserInteractionEnabled = true }
-            }
+//            DispatchQueue.main.async {
+//                UIApplication.shared.connectedScenes
+//                    .compactMap { $0 as? UIWindowScene }
+//                    .flatMap { $0.windows }
+//                    .forEach { $0.isUserInteractionEnabled = true }
+//            }
         }) {
             if let player {
                 ZStack(alignment: .topLeading) {
-                    VideoPlayer(player: player)
+                    VideoPlayerView(player: player)
                         .ignoresSafeArea()
-
-                    Button {
-                        isPlayingVideo = false
-                    } label: {
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 17, weight: .semibold))
-                            .foregroundColor(.white)
-                            .frame(width: 36, height: 36)
-                            .glassBackground()
-                    }
-                    .buttonStyle(.plain)
-                    .padding(.top, 20)
-                    .padding(.leading, 20)
+                        .onAppear { player.play() }
+//                    Button {
+//                        isPlayingVideo = false
+//                    } label: {
+//                        Image(systemName: "chevron.left")
+//                            .font(.system(size: 17, weight: .semibold))
+//                            .foregroundColor(.white)
+//                            .frame(width: 36, height: 36)
+//                            .glassBackground()
+//                    }
+//                    .buttonStyle(.plain)
+//                    .padding(.top, 20)
+//                    .padding(.leading, 20)
                 }
             }
         }
@@ -259,7 +259,7 @@ struct HistoryView: View {
                 } label: {
                     Image(systemName: "trash")
                         .font(.system(size: 15, weight: .semibold))
-                        Color("LightText")
+                        .foregroundColor(Color("LightText"))
                         .frame(width: 32, height: 32)
                         .glassBackground()
                 }

@@ -44,12 +44,12 @@ class StorageService {
     func saveHistory(from temporaryURL: URL, subject: SubjectPrompt, verb: VerbPrompt, context: ModelContext, isVideo: Bool = true) throws {
         let newId = UUID()
         
-//        if !isVideo {
-//            let newHistory = HistoryData(historyID: newId, subject: subject, verb: verb, videoURL: nil, thumbnailURL: nil)
-//            context.insert(newHistory)
-//            
-//            return
-//        }
+        //        if !isVideo {
+        //            let newHistory = HistoryData(historyID: newId, subject: subject, verb: verb, videoURL: nil, thumbnailURL: nil)
+        //            context.insert(newHistory)
+        //
+        //            return
+        //        }
         
         let videoName = "\(newId.uuidString).mov"
         let thumbnailName = "\(newId.uuidString).jpg"
@@ -71,16 +71,16 @@ class StorageService {
     func deleteHistory(_ history: HistoryData, context: ModelContext) {
         try? FileManager.default.removeItem(at: history.videoURL)
         try? FileManager.default.removeItem(at: history.thumbnailURL)
-
+        
         context.delete(history)
-
+        
         do {
             try context.save()
         } catch {
             print("Error: Could not save after deleting history: \(error.localizedDescription)")
         }
     }
-
+    
     func deleteAllHistory(context: ModelContext) {
         
         let historyDir = getDirectory()

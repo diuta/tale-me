@@ -47,7 +47,7 @@ struct OnboardingView: View {
                         .foregroundColor(.white)
                         .padding(.vertical, 12)
                         .padding(.horizontal, 28)
-                        .background(Color("red: 0.31, green: 0.73, blue: 0.68"))
+                        .background(Color(red: 0.31, green: 0.73, blue: 0.68))
                         .clipShape(Capsule())
                     }
                     .padding(.top, 20)

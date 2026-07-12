@@ -22,10 +22,11 @@ struct JourneyMediaContent: View {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(Color(.systemGray5))
                     .overlay {
-                        if let thumbnailURL {
-                            AsyncImage(url: thumbnailURL)
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fill)
+                        if let thumbnailURL,
+                           let uiImage = UIImage(contentsOfFile: thumbnailURL.path) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                         } else {
                             Image(systemName: "photo")
