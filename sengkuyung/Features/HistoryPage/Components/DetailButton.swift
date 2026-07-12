@@ -13,7 +13,7 @@ struct DetailButton: View {
     
     var body: some View {
         Rectangle()
-            .fill(Color(red: 0.0, green: 175.0 / 255.0, blue: 185.0 / 255.0))
+            .fill(Color("LightText"))
             .frame(width: 200, height: 50)
             .cornerRadius(1000)
             .overlay(

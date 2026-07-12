@@ -20,7 +20,7 @@ struct EmptyJourneyIllustration: View {
             Text("Your journey hasn't started yet")
                 .font(.system(size: 24, weight: .bold))
                 .multilineTextAlignment(.center)
-                .foregroundColor(Color(red: 0.0/255.0, green: 129.0/255.0, blue: 167.0/255.0))
+                .foregroundColor(Color("LightText"))
                 .frame(width: 285, height: 92)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

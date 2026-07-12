@@ -29,7 +29,10 @@ struct HistoryTopBar: View {
                     Image(systemName: leadingStyle == .home ? "house.fill" : "chevron.left")
                         .font(.system(size: 17, weight: .semibold))
                         .foregroundColor(.primary)
+                        .frame(width: 36, height: 36)
+                        .glassBackground()
                 }
+                .buttonStyle(.plain)
 
                 Spacer()
 
@@ -38,9 +41,12 @@ struct HistoryTopBar: View {
                         Image(systemName: "line.3.horizontal")
                             .font(.system(size: 17, weight: .semibold))
                             .foregroundColor(.primary)
+                            .frame(width: 36, height: 36)
+                            .glassBackground()
                     }
+                    .buttonStyle(.plain)
                 } else {
-                    Color.clear.frame(width: 20, height: 20)
+                    Color.clear.frame(width: 36, height: 36)
                 }
             }
         }
@@ -49,8 +55,25 @@ struct HistoryTopBar: View {
     }
 }
 
+extension View {
+    func glassBackground() -> some View {
+        self
+            .background(
+                Circle()
+                    .fill(.ultraThinMaterial)
+                    .overlay(
+                        Circle().stroke(Color.white.opacity(0.35), lineWidth: 1)
+                    )
+            )
+            .shadow(color: .black.opacity(0.12), radius: 6, x: 0, y: 3)
+    }
+}
+
 #Preview {
     VStack(spacing: 24) {
         HistoryTopBar(leadingStyle: .home)
+        HistoryTopBar(leadingStyle: .back)
     }
+    .padding()
+    .background(Color.gray.opacity(0.2))
 }

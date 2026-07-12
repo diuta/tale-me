@@ -11,7 +11,7 @@ struct BookCover: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 32)
-                .fill(Color(red: 112.0/255.0, green: 66.0/255.0, blue: 20.0/255.0))
+                .fill(Color("bookBrown"))
                 .frame(width: 473, height: 650)
                 .overlay(alignment: .leading) {
                     LinearGradient(
@@ -45,7 +45,6 @@ struct BookCover: View {
                     RoundedRectangle(cornerRadius: 32)
                         .stroke(Color.white.opacity(0.08), lineWidth: 1)
                 }
-            
                 .shadow(
                     color: Color.black.opacity(0.15),
                     radius: 10,
@@ -54,18 +53,16 @@ struct BookCover: View {
                 )
             
             Circle()
-                .fill(Color(red: 226.0/255.0, green: 217.0/255.0, blue: 208.0/255.0))
+                .fill(Color("cover"))
                 .frame(width: 350, height: 350)
+            
             Image("tale_menyapa")
                 .padding(.bottom, 80)
                 .frame(width: 259, height: 441)
             Text("Tale Me!")
                 .padding(.top, 450)
                 .font(Font.custom("sfprotext-semibold", size: 41)) //font nya blm fix
-                .foregroundColor(Color(red: 226.0/255.0, green: 217.0/255.0, blue: 208.0/255.0))
-            
-            
-            
+                .foregroundColor(Color("cover"))
         }
     }
 }

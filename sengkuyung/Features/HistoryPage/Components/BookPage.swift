@@ -20,7 +20,7 @@ struct BookPage<Content: View>: View {
             RoundedRectangle(cornerRadius: 32)
                 .fill(.white)
                 .shadow(
-                    color: (Color(red: 215.0/255.0, green: 215.0/255.0, blue: 215.0/255.0)).opacity(0.15), radius: 8, x: 0, y: 4
+                    color: (Color("pageBackground")).opacity(0.15), radius: 8, x: 0, y: 4
                 )
 
             content
@@ -34,6 +34,6 @@ struct BookPage<Content: View>: View {
     }
     .frame(width: 473, height: 650)
     .padding()
-    .background(Color(red: 112.0/255.0, green: 66.0/255.0, blue: 20.0/255.0))
+    .background(Color("bookBrown"))
     .cornerRadius(48)
 }

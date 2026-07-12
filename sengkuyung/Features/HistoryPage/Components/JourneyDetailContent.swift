@@ -23,7 +23,7 @@ struct JourneyDetailContent: View {
         return formatter
     }()
 
-    private let accent = Color(red: 0.0, green: 129.0 / 255.0, blue: 167.0 / 255.0)
+    private let accent = Color("LightText")
 
     private let baseWidth: CGFloat = 440
     private let baseHeight: CGFloat = 600
@@ -37,7 +37,7 @@ struct JourneyDetailContent: View {
                         VStack(spacing: 2) {
                             Text(title)
                                 .font(.system(size: 41 * scale, weight: .bold))
-                                .foregroundColor(Color(red: 0.0, green: 129.0 / 255.0, blue: 167.0 / 255.0))
+                                .foregroundColor(Color("LightText"))
                             Text(Self.dateFormatter.string(from: date))
                                 .font(.system(size: 12 * scale))
                                 .foregroundColor(.secondary)
@@ -66,16 +66,16 @@ struct JourneyDetailContent: View {
             title: "Fishing Elephant",
             date: Date(),
             duration: "1h 3s",
-            iconName1: "🎧",
-            iconName2: "🐼",
+            iconName1: "memancing",
+            iconName2: "gajah",
             isMostRecent: true
         )
         JourneyDetailContent(
             title: "Fishing Elephant",
             date: Date(),
             duration: "1h 3s",
-            iconName1: "🎧",
-            iconName2: "🐼"
+            iconName1: "memancing",
+            iconName2: "gajah"
         )
     }
     .padding()

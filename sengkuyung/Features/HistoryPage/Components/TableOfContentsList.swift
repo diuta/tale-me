@@ -29,7 +29,7 @@ struct TableOfContentsList: View {
         VStack(alignment: .center, spacing: 14) {
             Text("Your Journey")
             
-                .foregroundColor(Color(red: 0.0, green: 129.0 / 255.0, blue: 167.0 / 255.0))
+                .foregroundColor(Color("LightText"))
                 .font(.system(size: 41, weight: .bold))
 
             ScrollView(showsIndicators: false) {
@@ -45,7 +45,7 @@ struct TableOfContentsList: View {
 
                                 Text(Self.dateFormatter.string(from: row.date))
                                     .font(.system(size: 18, weight: .bold))
-                                    .foregroundColor(Color(red: 0.0, green: 129.0 / 255.0, blue: 167.0 / 255.0))
+                                    .foregroundColor(Color("LightText"))
 
                             }
                         }
@@ -74,6 +74,6 @@ struct TableOfContentsList: View {
     }
     .frame(width: 473, height: 650)
     .padding()
-    .background(Color(red: 112.0/255.0, green: 66.0/255.0, blue: 20.0/255.0))
+    .background(Color("bookBrown"))
     .cornerRadius(48)
 }

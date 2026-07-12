@@ -68,6 +68,19 @@ class StorageService {
         return
     }
     
+    func deleteHistory(_ history: HistoryData, context: ModelContext) {
+        try? FileManager.default.removeItem(at: history.videoURL)
+        try? FileManager.default.removeItem(at: history.thumbnailURL)
+
+        context.delete(history)
+
+        do {
+            try context.save()
+        } catch {
+            print("Error: Could not save after deleting history: \(error.localizedDescription)")
+        }
+    }
+
     func deleteAllHistory(context: ModelContext) {
         
         let historyDir = getDirectory()

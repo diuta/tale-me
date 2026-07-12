@@ -11,7 +11,8 @@ struct CardPair: View {
 
     enum Icon {
         case emoji(String)
-        case symbol(String, color: Color = Color(red: 0.0, green: 129.0/255.0, blue: 167.0/255.0))
+        case symbol(String, color: Color = Color("LightText"))
+        case image(String)
     }
 
     let iconName1: String
@@ -39,14 +40,14 @@ struct CardPair: View {
                 .strokeBorder(Self.accent, style: StrokeStyle(lineWidth: 3, dash: [12,10]))
                 .frame(width: 300, height: 300)
             HStack(spacing: 72) {
-                iconView(icon1Style ?? .emoji(iconName1))
+                iconView(icon1Style ?? .image(iconName1))
                     .rotationEffect(.degrees(-6))
 
                 Image(systemName: "plus")
                     .font(.system(size: 41, weight: .bold, design: .rounded))
                     .foregroundColor(Self.accent)
 
-                iconView(icon2Style ?? .emoji(iconName2))
+                iconView(icon2Style ?? .image(iconName2))
                     .rotationEffect(.degrees(6))
             }
         }
@@ -64,6 +65,11 @@ struct CardPair: View {
                 Image(systemName: name)
                     .font(.system(size: 41, weight: .semibold))
                     .foregroundColor(color)
+            case .image(let name):
+                Image(name)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 72, height: 72)
             }
         }
         .background(RoundedRectangle(cornerRadius: 16)
@@ -76,10 +82,10 @@ struct CardPair: View {
 
 #Preview(traits: .landscapeLeft) {
     HStack(spacing: 40) {
-        CardPair(iconName1: "🌊", iconName2: "🐼")
+        CardPair(iconName1: "anjing", iconName2: "berenang")
         CardPair(
-            icon1: .symbol("questionmark", color: Color(red: 0/255, green: 129/255, blue: 167/255)),
-            icon2: .symbol("questionmark", color: Color(red: 0/255, green: 129/255, blue: 167/255))
+            icon1: .symbol("questionmark", color: Color("LightText")),
+            icon2: .symbol("questionmark", color: Color("LightText"))
         )
     }
     .padding()

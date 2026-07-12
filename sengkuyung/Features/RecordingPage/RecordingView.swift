@@ -113,12 +113,12 @@ struct RecordingView: View {
             
         }
         .navigationBarBackButtonHidden()
-        .navigationDestination(isPresented: $cameraService.isSaveComplete) {
+        .fullScreenCover(isPresented: $cameraService.isSaveComplete) {
             HistoryView(onDismiss: {
                     cameraService.isSaveComplete = false
                 })
         }
-        .navigationDestination(isPresented: $isNavigateHome) {
+        .fullScreenCover(isPresented: $isNavigateHome) {
             PromptView()
         }
         .task {
@@ -127,6 +127,12 @@ struct RecordingView: View {
         .onDisappear {
             cameraService.stopRecording()
             cameraService.session.stopRunning()
+        }
+        .onChange(of: cameraService.isSaveComplete) { _, isSaveComplete in
+            if isSaveComplete {
+                cameraService.stopRecording()
+                cameraService.session.stopRunning()
+            }
         }
     }
 }

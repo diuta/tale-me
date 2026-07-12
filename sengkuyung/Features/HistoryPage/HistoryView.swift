@@ -9,6 +9,7 @@
 import SwiftUI
 import SwiftData
 import AVKit
+import UIKit
 
 struct HistoryView: View {
     
@@ -17,6 +18,8 @@ struct HistoryView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject private var viewModel: HistoryViewModel
     @State private var isPlayingVideo = false
+    @State private var player: AVPlayer?
+    private let storageService = StorageService()
     
     init(initialJourneys: [HistoryData] = [], onDismiss: @escaping () -> Void = {}) {
         self._viewModel = StateObject(wrappedValue: HistoryViewModel(initialJourneys: initialJourneys))
@@ -55,11 +58,53 @@ struct HistoryView: View {
                 .presentationDragIndicator(.visible)
             }
         }
+        .alert(
+            "Delete this story?",
+            isPresented: Binding(
+                get: { viewModel.journeyPendingDeletion != nil },
+                set: { isPresented in
+                    if !isPresented { viewModel.cancelDelete() }
+                }
+            ),
+            presenting: viewModel.journeyPendingDeletion
+        ) { _ in
+            Button("Cancel", role: .cancel) { viewModel.cancelDelete() }
+            Button("Delete", role: .destructive) {
+                viewModel.confirmDelete(context: modelContext, storageService: storageService)
+            }
+        } message: { journey in
+            Text("\"\(viewModel.title(for: journey))\" and its video will be permanently deleted. This can't be undone.")
+        }
         .navigationBarBackButtonHidden()
-        .fullScreenCover(isPresented: $isPlayingVideo) {
-            if let journey = viewModel.selectedJourney {
-                VideoPlayer(player: AVPlayer(url: journey.videoURL))
-                    .ignoresSafeArea()
+        .fullScreenCover(isPresented: $isPlayingVideo, onDismiss: {
+            player?.pause()
+            player = nil
+
+            DispatchQueue.main.async {
+                UIApplication.shared.connectedScenes
+                    .compactMap { $0 as? UIWindowScene }
+                    .flatMap { $0.windows }
+                    .forEach { $0.isUserInteractionEnabled = true }
+            }
+        }) {
+            if let player {
+                ZStack(alignment: .topLeading) {
+                    VideoPlayer(player: player)
+                        .ignoresSafeArea()
+
+                    Button {
+                        isPlayingVideo = false
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundColor(.white)
+                            .frame(width: 36, height: 36)
+                            .glassBackground()
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.top, 20)
+                    .padding(.leading, 20)
+                }
             }
         }
     }
@@ -70,9 +115,19 @@ struct HistoryView: View {
         case .cover:
             HistoryTopBar(leadingStyle: .home, showsTrailingMenu: false, onLeading: onDismiss)
         case .detail:
-            HistoryTopBar(leadingStyle: .back, onLeading: { viewModel.backToSpreadFromDetail() })
-        case .tableOfContents, .spread:
-            HistoryTopBar(leadingStyle: .home, onLeading: onDismiss)
+            HistoryTopBar(
+                leadingStyle: .back,
+                onLeading: { viewModel.backToSpreadFromDetail() },
+                onTrailingMenu: { viewModel.showTableOfContents() }
+            )
+        case .spread:
+            HistoryTopBar(
+                leadingStyle: .home,
+                onLeading: onDismiss,
+                onTrailingMenu: { viewModel.showTableOfContents() }
+            )
+        case .tableOfContents:
+            HistoryTopBar(leadingStyle: .home, showsTrailingMenu: false, onLeading: onDismiss)
         }
     }
     
@@ -190,12 +245,28 @@ struct HistoryView: View {
                 isVideo: true,
                 note: viewModel.note(for: journey),
                 onPlay: {
+                    player = AVPlayer(url: journey.videoURL)
                     isPlayingVideo = true
                 },
                 onAddOrEditNotes: {
                     viewModel.startEditingNotes()
                 }
             )
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .overlay(alignment: .topTrailing) {
+                Button {
+                    viewModel.requestDelete(journey)
+                } label: {
+                    Image(systemName: "trash")
+                        .font(.system(size: 15, weight: .semibold))
+                        Color("LightText")
+                        .frame(width: 32, height: 32)
+                        .glassBackground()
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 12)
+                .padding(.trailing, 8)
+            }
         }
     }
 }

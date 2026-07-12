@@ -23,7 +23,6 @@ struct JourneyCard: View {
         return formatter
     }()
 
-    private let bookBrown = Color(red: 0.42, green: 0.24, blue: 0.12)
 
     private let baseWidth: CGFloat = 440
     private let baseHeight: CGFloat = 600
@@ -37,7 +36,7 @@ struct JourneyCard: View {
                     VStack(spacing: 2) {
                         Text(title)
                             .font(.system(size: 18 * scale, weight: .bold))
-                            .foregroundColor(Color(red: 0.0, green: 129.0 / 255.0, blue: 167.0 / 255.0))
+                            .foregroundColor(Color("LightText"))
                         Text(Self.dateFormatter.string(from: date))
                             .font(.system(size: 12 * scale))
                             .foregroundColor(.secondary)
@@ -69,9 +68,9 @@ struct JourneyCard: View {
 
 #Preview(traits: .landscapeLeft) {
     HStack(spacing: 40) {
-        JourneyCard(title: "Fishing Elephant", date: Date(), iconName1: "🎧", iconName2: "🐼", isMostRecent: true)
+        JourneyCard(title: "Fishing Elephant", date: Date(), iconName1: "memancing", iconName2: "gajah", isMostRecent: true)
             .frame(width: 440, height: 600)
-        JourneyCard(title: "Swimming Tiger", date: Date(), iconName1: "🥽", iconName2: "🐅")
+        JourneyCard(title: "Swimming Cat", date: Date(), iconName1: "berenang", iconName2: "kucing")
             .frame(width: 440, height: 600)
     }
     .padding()

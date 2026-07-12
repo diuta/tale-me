@@ -17,8 +17,6 @@ struct NotesEditorSheet: View {
     @State private var text: String
     private let maxWords: Int
 
-    private let accent = Color(red: 0.0, green: 129.0 / 255.0, blue: 167.0 / 255.0)
-
     init(
         initialText: String = "",
         maxWords: Int = 30,
@@ -82,7 +80,7 @@ struct NotesEditorSheet: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .frame(height: 48)
-                        .background(accent)
+                        .background(Color("LightText"))
                         .clipShape(Capsule())
                 }
                 .buttonStyle(.plain)

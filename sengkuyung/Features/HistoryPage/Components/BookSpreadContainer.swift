@@ -17,9 +17,6 @@ struct BookSpreadContainer<Left: View, Right: View>: View {
     private let left: Left
     private let right: Right
 
-    private let bookBrown = Color(red: 0.42, green: 0.24, blue: 0.12)
-    private let bookBrownDarker = Color(red: 0.33, green: 0.19, blue: 0.095)
-    private let pageBackground = Color(red: 0.93, green: 0.93, blue: 0.93)
 
     init(
         leftPageNumber: Int? = nil,
@@ -41,13 +38,6 @@ struct BookSpreadContainer<Left: View, Right: View>: View {
         self.right = right()
     }
 
-    // Must match the book's actual content: two 480pt pages + the 24pt spine,
-    // plus the 18pt padding applied on every edge inside `book`. The previous
-    // constants (970x640) were smaller than that real content size, so the
-    // page background/frame never matched what was actually being laid out —
-    // `book` silently rendered larger than designWidth/designHeight, which
-    // threw off the scale-to-fit math in `body` and could blow the page up
-    // far past the visible area.
     private let designWidth: CGFloat = 480 * 2 + 24 + 18 * 2
     private let designHeight: CGFloat = 620 + 18 * 2
 
@@ -57,10 +47,6 @@ struct BookSpreadContainer<Left: View, Right: View>: View {
 
             GeometryReader { outerGeo in
                 let rawScale = min(outerGeo.size.width / designWidth, outerGeo.size.height / designHeight)
-                // Never let the book scale up past its design size — on a window/device
-                // larger than the 970x640 design canvas this would blow the content up
-                // far beyond the visible frame, leaving only a cropped, blank-looking
-                // sliver on screen.
                 let scale = rawScale.isFinite ? min(rawScale, 1) : 1
 
                 book
@@ -80,10 +66,10 @@ struct BookSpreadContainer<Left: View, Right: View>: View {
     private var book: some View {
         ZStack(alignment: .bottom) {
             RoundedRectangle(cornerRadius: 32, style: .continuous)
-                .fill(pageBackground)
+                .fill(Color("pageBackground"))
                 .overlay(
                     RoundedRectangle(cornerRadius: 32, style: .continuous)
-                        .strokeBorder(bookBrown, lineWidth: 20)
+                        .strokeBorder(Color("bookBrown"), lineWidth: 20)
 
                 )
                 .shadow(color: .black.opacity(0.18), radius: 14, x: 0, y: 10)
@@ -95,7 +81,7 @@ struct BookSpreadContainer<Left: View, Right: View>: View {
 
                 ZStack {
                     Rectangle()
-                        .fill(bookBrown)
+                        .fill(Color("bookBrown"))
                         .frame(width: 24, height: 617)
                     Rectangle()
                         .fill(
@@ -139,7 +125,7 @@ struct BookSpreadContainer<Left: View, Right: View>: View {
         Button(action: { action?() }) {
             Image(systemName: systemName)
                 .font(.title2.bold())
-                .foregroundColor(Color(red: 0.0, green: 129.0 / 255.0, blue: 167.0 / 255.0))
+                .foregroundColor(Color("LightText"))
         }
         .frame(width: 32, height: 44)
         .opacity(isVisible ? 1 : 0)
@@ -154,9 +140,9 @@ struct BookSpreadContainer<Left: View, Right: View>: View {
         showsPreviousChevron: true,
         showsNextChevron: true
     ) {
-        CardPair(iconName1: "🥽", iconName2: "🐅")
+        CardPair(iconName1: "berenang", iconName2: "kucing")
     } right: {
-        CardPair(iconName1: "🛍️", iconName2: "🐘")
+        CardPair(iconName1: "berpetualang", iconName2: "gajah")
     }
     .padding()
     .background(Color.white)

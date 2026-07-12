@@ -23,7 +23,7 @@ struct BookView<LeftPage: View, RightPage:View>: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 48)
-                .fill(Color(red: 112.0/255.0, green: 66.0/255.0, blue: 20.0/255.0))
+                .fill(Color("bookBrown"))
                 .frame(width: 1040, height: 650)
 
             HStack {

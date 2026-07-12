@@ -15,7 +15,6 @@ struct JourneyMediaContent: View {
     var onPlay: () -> Void = {}
     var onAddOrEditNotes: () -> Void = {}
 
-    private let accent = Color(red: 0.0, green: 129.0 / 255.0, blue: 167.0 / 255.0)
 
     var body: some View {
         VStack(spacing: 12) {
@@ -64,7 +63,7 @@ struct JourneyMediaContent: View {
             Button(action: onAddOrEditNotes) {
                 Label("Add Notes", systemImage: "pencil")
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(accent)
+                    .foregroundColor(Color("LightText"))
             }
             .buttonStyle(.plain)
         } else {
@@ -78,7 +77,7 @@ struct JourneyMediaContent: View {
                 Button(action: onAddOrEditNotes) {
                     Label("Edit Notes", systemImage: "pencil")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundColor(accent)
+                        .foregroundColor(Color("LightText"))
                 }
                 .buttonStyle(.plain)
             }

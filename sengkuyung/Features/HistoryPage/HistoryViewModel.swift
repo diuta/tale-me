@@ -36,6 +36,7 @@ class HistoryViewModel: ObservableObject {
     @Published var selectedJourney: HistoryData? = nil
     @Published var notesByJourney: [UUID: String] = [:]
     @Published var isEditingNotes = false
+    @Published var journeyPendingDeletion: HistoryData? = nil
 
 
     init(initialJourneys: [HistoryData] = []) {
@@ -136,6 +137,10 @@ class HistoryViewModel: ObservableObject {
         phase = .spread
     }
 
+    func showTableOfContents() {
+        withAnimation { phase = .tableOfContents }
+    }
+
     func startEditingNotes() {
         isEditingNotes = true
     }
@@ -147,5 +152,29 @@ class HistoryViewModel: ObservableObject {
     func confirmNotes(_ newText: String, for journey: HistoryData) {
         notesByJourney[journey.historyID] = newText
         isEditingNotes = false
+    }
+
+    func requestDelete(_ journey: HistoryData) {
+        journeyPendingDeletion = journey
+    }
+
+    func cancelDelete() {
+        journeyPendingDeletion = nil
+    }
+
+    func confirmDelete(context: ModelContext, storageService: StorageService) {
+        guard let journey = journeyPendingDeletion else { return }
+
+        storageService.deleteHistory(journey, context: context)
+        journeys.removeAll { $0.historyID == journey.historyID }
+        notesByJourney[journey.historyID] = nil
+
+        if selectedJourney?.historyID == journey.historyID {
+            selectedJourney = nil
+        }
+        journeyPendingDeletion = nil
+
+        pairIndex = min(pairIndex, max(pairs.count - 1, 0))
+        withAnimation { phase = .spread }
     }
 }

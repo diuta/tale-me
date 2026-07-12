@@ -21,8 +21,8 @@ struct PlaceholderJourneyCard: View {
                     Spacer(minLength: 0)
 
                     CardPair(
-                        icon1: .symbol("questionmark", color:(Color(red: 0/255, green: 129/255, blue: 167/255))),
-                        icon2: .symbol("questionmark", color: (Color(red: 0/255, green: 129/255, blue: 167/255)))
+                        icon1: .symbol("questionmark", color:(Color("LightText"))),
+                        icon2: .symbol("questionmark", color: (Color("LightText")))
                     )
                     .scaleEffect(scale)
                     .frame(height: 250 * scale)
