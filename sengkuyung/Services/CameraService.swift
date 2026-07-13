@@ -33,8 +33,8 @@ class CameraService: NSObject, ObservableObject {
     // MARK: - Setup Orchestration
     func setupCamera() {
         session.beginConfiguration()
-        session.sessionPreset = .high
         
+        session.sessionPreset = .high
         configureHardware()
         configureOutput()
         

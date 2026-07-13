@@ -3,17 +3,18 @@ import AVFoundation
 import SwiftData
 
 struct RecordingView: View {
-    @State private var centeredPropID: UUID?
-    @State private var promptIndex: Int = 0
-    @State private var isPaused = false
-    @State private var isFinishRecording = false
-    @EnvironmentObject var router: AppRouter
-    @EnvironmentObject var promptViewModel : PromptViewModel
-    @Environment(\.dismiss) private var dismiss
-    @StateObject private var cameraService = CameraService()
-    @Environment(\.modelContext) var context
+    @State private var centeredPropID: UUID? // ?
+    @State private var promptIndex: Int = 0 // ?
+    @State private var isPaused = false // ?
+    @State private var isFinishRecording = false // ?
     
-    private var currentProp: helpPrompt? {
+    @EnvironmentObject var router: AppRouter
+    @EnvironmentObject var promptViewModel : PromptViewModel // cuman buat ambil title
+    @Environment(\.dismiss) private var dismiss // ?
+    @StateObject private var cameraService = CameraService()
+    @Environment(\.modelContext) var context // buat crud historyData
+    
+    private var currentProp: HelpPrompt? {
         let props = promptViewModel.selectedVerb.props
         return props.first(where: { $0.id == centeredPropID }) ?? props.first
     }
@@ -135,7 +136,7 @@ struct RecordingView: View {
     }
 }
 //
-//#Preview {
-//    RecordingView()
-//        .environmentObject(PromptViewModel())
-//}
+#Preview {
+    RecordingView()
+        .environmentObject(PromptViewModel())
+}
