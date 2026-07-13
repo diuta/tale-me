@@ -24,28 +24,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		197A72132FF3606200A1F60E /* sengkuyung.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sengkuyung.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		197A72222FF3606300A1F60E /* sengkuyungTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sengkuyungTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		197A722C2FF3606300A1F60E /* sengkuyungUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sengkuyungUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		197A72132FF3606200A1F60E /* TaleMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaleMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		197A72222FF3606300A1F60E /* TaleMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaleMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		197A722C2FF3606300A1F60E /* TaleMeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaleMeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		DBD8BB4830017FAC0067F2A8 /* Exceptions for "sengkuyung" folder in "sengkuyung" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 197A72122FF3606200A1F60E /* sengkuyung */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		197A72152FF3606200A1F60E /* sengkuyung */ = {
+		197A72152FF3606200A1F60E /* TaleMe */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				DBD8BB4830017FAC0067F2A8 /* Exceptions for "sengkuyung" folder in "sengkuyung" target */,
-			);
-			path = sengkuyung;
+			path = TaleMe;
 			sourceTree = "<group>";
 		};
 		197A72252FF3606300A1F60E /* sengkuyungTests */ = {
@@ -88,7 +75,7 @@
 		197A720A2FF3606200A1F60E = {
 			isa = PBXGroup;
 			children = (
-				197A72152FF3606200A1F60E /* sengkuyung */,
+				197A72152FF3606200A1F60E /* TaleMe */,
 				197A72252FF3606300A1F60E /* sengkuyungTests */,
 				197A722F2FF3606300A1F60E /* sengkuyungUITests */,
 				197A72142FF3606200A1F60E /* Products */,
@@ -98,9 +85,9 @@
 		197A72142FF3606200A1F60E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				197A72132FF3606200A1F60E /* sengkuyung.app */,
-				197A72222FF3606300A1F60E /* sengkuyungTests.xctest */,
-				197A722C2FF3606300A1F60E /* sengkuyungUITests.xctest */,
+				197A72132FF3606200A1F60E /* TaleMe.app */,
+				197A72222FF3606300A1F60E /* TaleMeTests.xctest */,
+				197A722C2FF3606300A1F60E /* TaleMeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		197A72122FF3606200A1F60E /* sengkuyung */ = {
+		197A72122FF3606200A1F60E /* TaleMe */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 197A72362FF3606300A1F60E /* Build configuration list for PBXNativeTarget "sengkuyung" */;
+			buildConfigurationList = 197A72362FF3606300A1F60E /* Build configuration list for PBXNativeTarget "TaleMe" */;
 			buildPhases = (
 				197A720F2FF3606200A1F60E /* Sources */,
 				197A72102FF3606200A1F60E /* Frameworks */,
@@ -121,18 +108,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				197A72152FF3606200A1F60E /* sengkuyung */,
+				197A72152FF3606200A1F60E /* TaleMe */,
 			);
-			name = sengkuyung;
+			name = TaleMe;
 			packageProductDependencies = (
 			);
 			productName = sengkuyung;
-			productReference = 197A72132FF3606200A1F60E /* sengkuyung.app */;
+			productReference = 197A72132FF3606200A1F60E /* TaleMe.app */;
 			productType = "com.apple.product-type.application";
 		};
-		197A72212FF3606300A1F60E /* sengkuyungTests */ = {
+		197A72212FF3606300A1F60E /* TaleMeTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 197A72392FF3606300A1F60E /* Build configuration list for PBXNativeTarget "sengkuyungTests" */;
+			buildConfigurationList = 197A72392FF3606300A1F60E /* Build configuration list for PBXNativeTarget "TaleMeTests" */;
 			buildPhases = (
 				197A721E2FF3606300A1F60E /* Sources */,
 				197A721F2FF3606300A1F60E /* Frameworks */,
@@ -146,16 +133,16 @@
 			fileSystemSynchronizedGroups = (
 				197A72252FF3606300A1F60E /* sengkuyungTests */,
 			);
-			name = sengkuyungTests;
+			name = TaleMeTests;
 			packageProductDependencies = (
 			);
 			productName = sengkuyungTests;
-			productReference = 197A72222FF3606300A1F60E /* sengkuyungTests.xctest */;
+			productReference = 197A72222FF3606300A1F60E /* TaleMeTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		197A722B2FF3606300A1F60E /* sengkuyungUITests */ = {
+		197A722B2FF3606300A1F60E /* TaleMeUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 197A723C2FF3606300A1F60E /* Build configuration list for PBXNativeTarget "sengkuyungUITests" */;
+			buildConfigurationList = 197A723C2FF3606300A1F60E /* Build configuration list for PBXNativeTarget "TaleMeUITests" */;
 			buildPhases = (
 				197A72282FF3606300A1F60E /* Sources */,
 				197A72292FF3606300A1F60E /* Frameworks */,
@@ -169,11 +156,11 @@
 			fileSystemSynchronizedGroups = (
 				197A722F2FF3606300A1F60E /* sengkuyungUITests */,
 			);
-			name = sengkuyungUITests;
+			name = TaleMeUITests;
 			packageProductDependencies = (
 			);
 			productName = sengkuyungUITests;
-			productReference = 197A722C2FF3606300A1F60E /* sengkuyungUITests.xctest */;
+			productReference = 197A722C2FF3606300A1F60E /* TaleMeUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -199,7 +186,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 197A720E2FF3606200A1F60E /* Build configuration list for PBXProject "sengkuyung" */;
+			buildConfigurationList = 197A720E2FF3606200A1F60E /* Build configuration list for PBXProject "TaleMe" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -213,9 +200,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				197A72122FF3606200A1F60E /* sengkuyung */,
-				197A72212FF3606300A1F60E /* sengkuyungTests */,
-				197A722B2FF3606300A1F60E /* sengkuyungUITests */,
+				197A72122FF3606200A1F60E /* TaleMe */,
+				197A72212FF3606300A1F60E /* TaleMeTests */,
+				197A722B2FF3606300A1F60E /* TaleMeUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -271,12 +258,12 @@
 /* Begin PBXTargetDependency section */
 		197A72242FF3606300A1F60E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 197A72122FF3606200A1F60E /* sengkuyung */;
+			target = 197A72122FF3606200A1F60E /* TaleMe */;
 			targetProxy = 197A72232FF3606300A1F60E /* PBXContainerItemProxy */;
 		};
 		197A722E2FF3606300A1F60E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 197A72122FF3606200A1F60E /* sengkuyung */;
+			target = 197A72122FF3606200A1F60E /* TaleMe */;
 			targetProxy = 197A722D2FF3606300A1F60E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -413,7 +400,6 @@
 				DEVELOPMENT_TEAM = 555V9YK43S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = sengkuyung/Info.plist;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"This app uses the camera to record your storytelling session. You can turn this off by clicking the off camera button besides the camera preview.\"";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "\"This app uses the microphone to record your storytelling session. You can turn this off by clicking the mute button besides the camera preview.\"";
@@ -427,7 +413,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.diuta.sengkuyungCath1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.diuta.TaleMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -449,7 +435,6 @@
 				DEVELOPMENT_TEAM = 555V9YK43S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = sengkuyung/Info.plist;
 				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "\"This app uses the camera to record your storytelling session. You can turn this off by clicking the off camera button besides the camera preview.\"";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "\"This app uses the microphone to record your storytelling session. You can turn this off by clicking the mute button besides the camera preview.\"";
@@ -463,7 +448,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.diuta.sengkuyungCath1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.diuta.TaleMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -493,7 +478,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sengkuyung.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/sengkuyung";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TaleMe.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TaleMe";
 			};
 			name = Debug;
 		};
@@ -515,7 +500,7 @@
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/sengkuyung.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/sengkuyung";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TaleMe.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/TaleMe";
 			};
 			name = Release;
 		};
@@ -562,7 +547,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		197A720E2FF3606200A1F60E /* Build configuration list for PBXProject "sengkuyung" */ = {
+		197A720E2FF3606200A1F60E /* Build configuration list for PBXProject "TaleMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				197A72342FF3606300A1F60E /* Debug */,
@@ -571,7 +556,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		197A72362FF3606300A1F60E /* Build configuration list for PBXNativeTarget "sengkuyung" */ = {
+		197A72362FF3606300A1F60E /* Build configuration list for PBXNativeTarget "TaleMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				197A72372FF3606300A1F60E /* Debug */,
@@ -580,7 +565,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		197A72392FF3606300A1F60E /* Build configuration list for PBXNativeTarget "sengkuyungTests" */ = {
+		197A72392FF3606300A1F60E /* Build configuration list for PBXNativeTarget "TaleMeTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				197A723A2FF3606300A1F60E /* Debug */,
@@ -589,7 +574,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		197A723C2FF3606300A1F60E /* Build configuration list for PBXNativeTarget "sengkuyungUITests" */ = {
+		197A723C2FF3606300A1F60E /* Build configuration list for PBXNativeTarget "TaleMeUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				197A723D2FF3606300A1F60E /* Debug */,

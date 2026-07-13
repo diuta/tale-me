@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 @main
-struct sengkuyungApp: App {
+struct TaleMeApp: App {
     @StateObject private var router = AppRouter()
     
     var body: some Scene {
