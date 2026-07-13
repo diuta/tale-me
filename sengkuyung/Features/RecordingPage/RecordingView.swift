@@ -7,7 +7,7 @@ struct RecordingView: View {
     @State private var promptIndex: Int = 0
     @State private var isPaused = false
     @State private var isFinishRecording = false
-    @State private var isNavigateHome = false
+    @EnvironmentObject var router: AppRouter
     @EnvironmentObject var promptViewModel : PromptViewModel
     @Environment(\.dismiss) private var dismiss
     @StateObject private var cameraService = CameraService()
@@ -105,7 +105,7 @@ struct RecordingView: View {
                     },
                     onHome: {
                         isPaused = false
-                        isNavigateHome = true
+                        router.popToRoot()
                     }
                 )
                 .transition(.scale.combined(with: .opacity))
@@ -116,10 +116,8 @@ struct RecordingView: View {
         .fullScreenCover(isPresented: $cameraService.isSaveComplete) {
             HistoryView(onDismiss: {
                     cameraService.isSaveComplete = false
+                    router.popToRoot()
                 })
-        }
-        .fullScreenCover(isPresented: $isNavigateHome) {
-            PromptView()
         }
         .task {
             cameraService.setupCamera()

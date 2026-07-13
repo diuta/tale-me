@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ActionButtons: View {
+    @EnvironmentObject var router: AppRouter
     @ObservedObject var viewModel: PromptViewModel
     var onOpenHistory: () -> Void = {}
 
@@ -27,8 +28,8 @@ struct ActionButtons: View {
             }
             .buttonStyle(.plain)
             
-            NavigationLink {
-                CountdownView()
+            Button {
+                router.navigate(to: .countdown)
             } label: {
                 HStack (spacing: 15){
                     Image(systemName: "play.fill")
@@ -38,7 +39,6 @@ struct ActionButtons: View {
                 }
                 .padding(.horizontal, 65)
                 .padding(.vertical, 10)
-                //                .foregroundStyle(.primary)?
             }
             .buttonStyle(.glass)
             
@@ -61,4 +61,5 @@ struct ActionButtons: View {
 
 #Preview {
     ActionButtons(viewModel: PromptViewModel(), onOpenHistory: {})
+        .environmentObject(AppRouter())
 }

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DialogBox: View {
     @EnvironmentObject var viewModel : PromptViewModel
+    @EnvironmentObject var router: AppRouter
     
     var body: some View {
         ZStack (alignment: .bottom){
@@ -24,8 +25,8 @@ struct DialogBox: View {
                     .font(.system(size: 32))
                     .foregroundStyle(.lightText)
                 
-                NavigationLink {
-                    RecordingView()
+                Button {
+                    router.navigate(to: .recording)
                 } label: {
                     Text("Tap to continue")
                         .font(.system(size: 24))
@@ -50,4 +51,6 @@ struct DialogBox: View {
 
 #Preview {
     DialogBox()
+        .environmentObject(PromptViewModel())
+        .environmentObject(AppRouter())
 }

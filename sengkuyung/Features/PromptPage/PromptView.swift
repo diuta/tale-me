@@ -16,10 +16,11 @@ struct LandingView: View {
 
 struct PromptView: View {
     @StateObject var viewModel = PromptViewModel()
+    @EnvironmentObject var router: AppRouter
     @State private var showHistory = false
 
     var body: some View {
-        NavigationStack() {
+        NavigationStack(path: $router.path) {
             ZStack {
                 Image(viewModel.selectedVerb.imageBackground)
                     .resizable()
@@ -43,6 +44,16 @@ struct PromptView: View {
                     ActionButtons(viewModel: viewModel, onOpenHistory: { showHistory = true })
                 }
             }
+            .navigationDestination(for: AppRoute.self) { route in
+                switch route {
+                case .countdown:
+                    CountdownView()
+                case .recording:
+                    RecordingView()
+                default:
+                    EmptyView()
+                }
+            }
         }
         .navigationBarBackButtonHidden()
         .environmentObject(viewModel)
@@ -54,4 +65,5 @@ struct PromptView: View {
 
 #Preview {
     LandingView()
+        .environmentObject(AppRouter())
 }

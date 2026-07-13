@@ -10,9 +10,12 @@ import SwiftData
 
 @main
 struct sengkuyungApp: App {
+    @StateObject private var router = AppRouter()
+    
     var body: some Scene {
         WindowGroup {
             LandingView()
+                .environmentObject(router)
         }
         .modelContainer(for: HistoryData.self)
     }
