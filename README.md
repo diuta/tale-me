@@ -1,12 +1,12 @@
-# Sengkuyung Code Structure Guide
+# TaleMe Code Structure Guide
 
 This document explains the current project structure, coding style, and feature responsibilities. Use `PromptPage` as the benchmark for organizing new SwiftUI features.
 
 ## Project Structure
 
 ```text
-sengkuyung/
-├── sengkuyung/
+TaleMe/
+├── TaleMe/
 │   ├── Features/
 │   │   ├── CameraView/
 │   │   ├── CountdownPage/
@@ -20,9 +20,9 @@ sengkuyung/
 │   ├── SoundEffects/
 │   ├── Assets.xcassets
 │   ├── ContentView.swift
-│   └── sengkuyungApp.swift
-├── sengkuyungTests/
-└── sengkuyungUITests/
+│   └── TaleMeApp.swift
+├── TaleMeTests/
+└── TaleMeUITests/
 ```
 
 ## Feature Folder Pattern
@@ -155,7 +155,7 @@ Only add folders that the feature actually needs. If a screen is still a placeho
 
 ## App Flow
 
-- `sengkuyungApp` is the app entry point.
+- `TaleMeApp` is the app entry point.
 - The app starts at `LandingView`.
 - `LandingView` checks `hasCompletedOnboarding`.
 - New users see `OnboardingView`.
@@ -164,7 +164,7 @@ Only add folders that the feature actually needs. If a screen is still a placeho
 
 ## Persistence And Media
 
-- SwiftData is configured in `sengkuyungApp` with `HistoryData`.
+- SwiftData is configured in `TaleMeApp` with `HistoryData`.
 - `StorageManager` handles document directory access.
 - `StorageManager` saves history records into SwiftData.
 - For videos, `StorageManager` moves the temporary video file into Documents and generates a JPEG thumbnail with AVFoundation/UIKit.
